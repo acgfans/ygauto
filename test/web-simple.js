@@ -1,7 +1,7 @@
 "use strict";
 
 var wd = require("wd");
-var driver = require('../helpers/webdriver');
+var driver = require('../helpers/common/webdriver');
 
 before(function (done) {
   driver.init(function () {

@@ -1,8 +1,8 @@
 "use strict";
 
 var wd = require("wd");
-var driver = require('../helpers/androiddriver');
-var actions = require('../helpers/actions').init(wd);
+var driver = require('../helpers/common/androiddriver');
+var util = require('../helpers/util').init(wd);
 
 var desired = {
   appPackage: 'com.github.android_app_bootstrap',
@@ -39,6 +39,9 @@ describe("android simple", function () {
       .sleep(1000)
       .elementById('com.github.android_app_bootstrap:id/login_button')
       .tap()
+      .androidMem(desired.appPackage).then(function (m) {
+        console.log('Meminfo: ' + m);
+      })
       .sleep(2000)
   });
 
@@ -54,13 +57,32 @@ describe("android simple", function () {
       .swipeToUp()
       .deviceKeyEvent(4)
       .sleep(2000)
+  });
 
+  it("webview", function () {
+    return browser
+      .elementByXPath('//android.widget.TextView[contains(@text,"Webview")]')
+      .tap()
+      .sleep(2000)
+      .elementByAccessibilityId('pushView')
+      .tap()
+      .elementByAccessibilityId('setTitle')
+      .tap()
+      .sleep(2000)
+      .elementByAccessibilityId('popView')
+      .tap()
+      .androidCPU(desired.appPackage).then(function (c) {
+        console.log('CPU: ' + c);
+      })
   });
 
   it("go to personal", function () {
     return browser
       .elementByXPath('//android.widget.TextView[contains(@text,"PERSONAL")]')
       .tap()
+      .androidPerfPin(desired.appPackage).then(function (p) {
+        console.log('performance：' + JSON.stringify(p));
+      })
       .sleep(2000)
   });
 

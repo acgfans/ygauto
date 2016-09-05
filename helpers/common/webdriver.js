@@ -32,7 +32,7 @@ exports.init = function (cb) {
 
     function startServer() {
         return new Promise(function (resolve, reject) {
-            var chromePath = path.join(__dirname, '..', 'chromedriver.exe')
+            var chromePath = path.join(__dirname, '../..', 'chromedriver.exe')
             var process = childProcess.spawn(chromePath);
 
             process.stderr.setEncoding('utf8');

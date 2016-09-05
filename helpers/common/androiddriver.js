@@ -40,8 +40,8 @@ exports.init = function (cb) {
     function startServer() {
         return new Promise(function (resolve, reject) {
             getDevices().then(function (devices) {
-                var appiumPath = path.join(__dirname, '..', 'node_modules', '.bin', 'appium.cmd')
-                var args = ['-a 127.0.0.1 -p 4726 -bp 4780 --session-override --no-reset --command-timeout 600'];
+                var appiumPath = path.join(__dirname, '../..', 'node_modules', '.bin', 'appium.cmd')
+                var args = ['-a 127.0.0.1 -p 4726 -bp 4780 --session-override --no-reset --command-timeout 60'];
 
                 var process = childProcess.spawn(appiumPath, args, {
                     cwd: null,
@@ -124,7 +124,7 @@ exports.stop = function (cb) {
         } else {
             var ps = "";
             stdout.split('\n').filter(function (line) {
-                var p = line.trim().split(/\s+/), pid = p[4];
+                var p = line.trim().split(/\s+/g), pid = p[4];
                 if (parseInt(pid)) {
                     ps += ' /pid ' + pid;
                 }
